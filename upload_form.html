@@ -1,0 +1,58 @@
+<style>
+    .line{
+        width: 100%;
+        display: inline-block;
+        margin: 10px;
+    }
+    .line>span{
+        width: 50%;
+        text-align: right;
+        display: inline-block;
+    }
+    .line>input{
+        width: auto;
+        display: inline-block;
+        padding-left: 10px;
+    }
+    .upload_btn{
+        margin: 10px;
+
+    }
+    .float_l{
+        float:left;
+        text-align: center;
+        margin: 10px;
+    }
+    .float_r{
+        float:right;
+        text-align: center;
+        margin: 10px;
+    }
+</style>
+{% block content %}
+
+    <form method="post" enctype="multipart/form-data" >
+    {% csrf_token %}
+    <div class="line"><span>Enter the image of url:</span> <input type="text" name ='single_image_url' id="single_image_url"><input type='text' name="single_image_quality" style="margin-left:75px"></div>
+    <div class="line"><span>Upload a txt file of image url's: </span><input type="file" name="txt_file">&nbsp<input type='text' name="txt_file_quality"></div>
+    <div class="line"><span>Upload a xls/csv file of image url's: </span><input type="file" name="xls_file">&nbsp<input type='text' name="xls_file_quality"></div>
+    <div class="line"><span>Upload an image: </span><input type="file" name="physical_image">&nbsp<input type='text' name="physical_image_quality"></div>
+    <div align="center" class="upload_btn"><button type="submit">Upload</button></div>
+    </form>
+    <p>{{error}}</p>
+    {% if extracted %}
+    <div class="float_l">
+        <h3><u>Actual Images</u></h3>
+   {% for image in extracted_images%}
+    <img src="../../static/{{image}}"><br>
+   {% endfor %}
+    </div>
+    <div class="float_r">
+
+        <h3><u>Compressed Images</u></h3>
+    {% for image in compressed_images%}
+    <img src="{{image}}"><br>
+   {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}
